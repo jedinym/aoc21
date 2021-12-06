@@ -1,5 +1,6 @@
 --
 import Data.List.Split (splitOn)
+import Criterion.Main
 
 type Cnt = Int
 type Val = Int
@@ -17,13 +18,14 @@ age (School val cnt) = School (newVal val) cnt
   where newVal 0 = 6
         newVal n = n - 1
 
-accOffSpring :: Fish -> Fish -> Fish
-accOffSpring (School _ acc) (School val cnt)
-  | val == 0 = School 8 (acc + cnt)
-  | otherwise = School 8 acc
-
 countOffspring :: [Fish] -> Fish
 countOffspring = foldl accOffSpring (School 8 0)
+  where
+    accOffSpring :: Fish -> Fish -> Fish
+    accOffSpring (School _ acc) (School val cnt)
+      | val == 0 = School 8 (acc + cnt)
+      | otherwise = School 8 acc
+
 
 nextGeneration :: [Fish] -> [Fish]
 nextGeneration fish = offspring : aged 
